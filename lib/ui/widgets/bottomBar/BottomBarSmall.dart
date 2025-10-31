@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../themes/bloopaExtras.dart';
+import '../../themes/bloopaExtras.dart';
 
 
-class BottomBarLayout extends StatelessWidget implements PreferredSizeWidget {
+class BottomBarSmall extends StatelessWidget implements PreferredSizeWidget {
   final int itemSelected;
   final String local;
   final String? listName ;
 
-  const BottomBarLayout({super.key,  required this.itemSelected, required this.local, required this.listName});
+  const BottomBarSmall({super.key,  required this.itemSelected, required this.local, required this.listName});
 
   @override
   Widget build(BuildContext context) {
@@ -23,43 +23,43 @@ class BottomBarLayout extends StatelessWidget implements PreferredSizeWidget {
           ],
         ),
         child:BottomNavigationBar(
-                  backgroundColor:  kBloopaPrimaryContainer,
-                  showSelectedLabels: false,
-                  showUnselectedLabels: false,
-                  iconSize: 35,
-                  type: BottomNavigationBarType.fixed,
-                  // Change to fixed for better control
-                  selectedIconTheme: IconThemeData(color: kBloopaPrimary),
-                  unselectedIconTheme: IconThemeData(color: kBloopaPrimary),
-                  selectedItemColor: Colors.black,
-                  unselectedItemColor: Colors.black,
-                  items: <BottomNavigationBarItem>[
-                    _buildBottomNavigationBarItem(Icons.home_outlined, 0),
-                    _buildBottomNavigationBarItem(Icons.person_outline,  1),
-                    _buildBottomNavigationShoppingBarItem(2),
-                    _buildBottomNavigationNotificationBarItem(3),
+          backgroundColor:  kBloopaPrimaryContainer,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          iconSize: 35,
+          type: BottomNavigationBarType.fixed,
+          // Change to fixed for better control
+          selectedIconTheme: IconThemeData(color: kBloopaPrimary),
+          unselectedIconTheme: IconThemeData(color: kBloopaPrimary),
+          selectedItemColor: Colors.black,
+          unselectedItemColor: Colors.black,
+          items: <BottomNavigationBarItem>[
+            _buildBottomNavigationBarItem(Icons.home_outlined, 0),
+            _buildBottomNavigationBarItem(Icons.person_outline,  1),
+            _buildBottomNavigationShoppingBarItem(2),
+            _buildBottomNavigationNotificationBarItem(3),
 
-                  ],
-                  currentIndex: itemSelected,
-                  // Set the initial selected index
+          ],
+          currentIndex: itemSelected,
+          // Set the initial selected index
 
-                  onTap: (value) {
-                    switch (value) {
-                      case 0:
-                        print('link to home');
-                        break;
-                      case 1:
-                        print('link to profile');
-                        break;
-                      case 2:
-                        print('link to panier');
-                        break;
-                      case 3:
-                        print('link to menu');
-                        break;
-                    }
-                  },
-                )
+          onTap: (value) {
+            switch (value) {
+              case 0:
+                print('link to home');
+                break;
+              case 1:
+                print('link to profile');
+                break;
+              case 2:
+                print('link to panier');
+                break;
+              case 3:
+                print('link to menu');
+                break;
+            }
+          },
+        )
     );
   }
 
@@ -70,10 +70,10 @@ class BottomBarLayout extends StatelessWidget implements PreferredSizeWidget {
   BottomNavigationBarItem _buildBottomNavigationBarItem(IconData icon, int index) {
 
     return BottomNavigationBarItem(
-      icon: Container(
-        padding: EdgeInsets.all(4.0), // Add padding for the background
-        child: Icon(icon),
-      ),
+        icon: Container(
+          padding: EdgeInsets.all(4.0), // Add padding for the background
+          child: Icon(icon),
+        ),
         label:""
     );
   }

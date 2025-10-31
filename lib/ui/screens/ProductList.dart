@@ -1,7 +1,8 @@
+import 'package:bloopa/utils/Responsive.dart';
 import 'package:flutter/material.dart';
 
-import '../widgets/AppBarLayout.dart';
-import '../widgets/BottomBarLayout.dart';
+import '../widgets/appBar/AppBarLayout.dart';
+import '../widgets/bottomBar/BottomBarLayout.dart';
 import '../widgets/card-product/CarListingCard.dart';
 
 class ProductListScreen extends StatefulWidget {
@@ -79,8 +80,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      appBar: AppBarLayout(scaffoldKey: _scaffoldKey),
+      appBar:AppBarLayout(scaffoldKey: _scaffoldKey),
       bottomNavigationBar: BottomBarLayout(
         itemSelected: 0,
         local: 'de',

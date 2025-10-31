@@ -21,8 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Padding(
         padding: EdgeInsets.only(left: 15, right: 15),
         child: Center(
-          // Centrer le bouton sur l'écran
-          child: Column(
+           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
