@@ -3,7 +3,7 @@ import '../../themes/bloopaExtras.dart';
 import '../form/IntelligentSearchWidget.dart';
 
 
-class AppBarMedium extends StatelessWidget implements PreferredSizeWidget {
+class AppBarMedium extends StatelessWidget  {
   final GlobalKey<ScaffoldState> scaffoldKey;
 
   AppBarMedium({required this.scaffoldKey});
@@ -16,7 +16,7 @@ class AppBarMedium extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+
+
 
 }

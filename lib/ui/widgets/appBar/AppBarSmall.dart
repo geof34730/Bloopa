@@ -3,10 +3,10 @@ import '../../themes/bloopaExtras.dart';
 import '../form/IntelligentSearchWidget.dart';
 
 
-class AppBarSmall extends StatelessWidget implements PreferredSizeWidget {
+class AppBarSmall extends StatelessWidget  {
   final GlobalKey<ScaffoldState> scaffoldKey;
 
-  AppBarSmall({required this.scaffoldKey});
+  AppBarSmall({required this.scaffoldKey,});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,6 @@ class AppBarSmall extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+
 
 }

@@ -1,6 +1,7 @@
-import 'package:bloopa/utils/Responsive.dart';
+
 import 'package:flutter/material.dart';
 
+import '../../utils/responsive.dart';
 import '../widgets/appBar/AppBarLayout.dart';
 import '../widgets/bottomBar/BottomBarLayout.dart';
 import '../widgets/card-product/CarListingCard.dart';
@@ -15,7 +16,6 @@ class ProductListScreen extends StatefulWidget {
 class _ProductListScreenState extends State<ProductListScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  // ✅ On génère 40 véhicules automatiquement
   final List<Map<String, dynamic>> cars = List.generate(40, (i) {
     final randomImages = [
       "https://picsum.photos/800/600?car$i",
@@ -82,18 +82,14 @@ class _ProductListScreenState extends State<ProductListScreen> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar:AppBarLayout(scaffoldKey: _scaffoldKey),
+      appBar:AppBarLayout(scaffoldKey: _scaffoldKey,preferredHeight: getHeightAppBar(context: context)),
       bottomNavigationBar: BottomBarLayout(
         itemSelected: 0,
-        local: 'de',
-        listName: 'ddd',
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {
           const itemWidth = 300.0;
           int crossAxisCount = (constraints.maxWidth / itemWidth).floor();
-
-          // ✅ si écran petit → 1 carte par ligne
           if (crossAxisCount < 1) crossAxisCount = 1;
 
           return GridView.builder(

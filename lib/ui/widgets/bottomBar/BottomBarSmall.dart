@@ -5,10 +5,8 @@ import '../../themes/bloopaExtras.dart';
 
 class BottomBarSmall extends StatelessWidget implements PreferredSizeWidget {
   final int itemSelected;
-  final String local;
-  final String? listName ;
 
-  const BottomBarSmall({super.key,  required this.itemSelected, required this.local, required this.listName});
+  const BottomBarSmall({super.key,  required this.itemSelected});
 
   @override
   Widget build(BuildContext context) {

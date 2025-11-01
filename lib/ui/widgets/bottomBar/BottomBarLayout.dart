@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
-
 import '../../../utils/Responsive.dart';
-import '../../themes/bloopaExtras.dart';
 import 'BottomBarSmall.dart';
 
 
 class BottomBarLayout extends StatelessWidget implements PreferredSizeWidget {
   final int itemSelected;
-  final String local;
-  final String? listName ;
 
-  const BottomBarLayout({super.key,  required this.itemSelected, required this.local, required this.listName});
+
+  const BottomBarLayout({super.key,  required this.itemSelected});
   @override
   Widget build(BuildContext context) {
-    var screenSize = MediaQuery.of(context).size;
     return ResponsiveWidget.isLargeScreen(context)
         ?
           SizedBox.shrink()
@@ -22,12 +18,9 @@ class BottomBarLayout extends StatelessWidget implements PreferredSizeWidget {
           ?
           SizedBox.shrink()
           :
-          BottomBarSmall(itemSelected: itemSelected, local: local, listName: listName);
-
+          BottomBarSmall(itemSelected: itemSelected);
   }
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
-
-
 }

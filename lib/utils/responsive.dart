@@ -41,3 +41,6 @@ class ResponsiveWidget extends StatelessWidget {
     );
   }
 }
+double getHeightAppBar({required BuildContext context}) {
+  return ResponsiveWidget.isLargeScreen(context) ? 90.0 : ResponsiveWidget.isMediumScreen(context) ? 90.0 : 60.0;
+}
