@@ -19,7 +19,6 @@ class AppBarLayout extends StatelessWidget implements PreferredSizeWidget {
     if (ResponsiveWidget.isLargeScreen(context)) {
       return  AppBarLarge(preferredHeight:preferredHeight);
     } else if (ResponsiveWidget.isMediumScreen(context)) {
-      // Tu peux remettre AppBarMedium si besoin
       return  AppBarLarge(preferredHeight:preferredHeight);
       // return AppBarMedium(scaffoldKey: scaffoldKey);
     } else {

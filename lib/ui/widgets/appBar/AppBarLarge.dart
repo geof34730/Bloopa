@@ -32,6 +32,12 @@ class _AppBarLargeState extends State<AppBarLarge> {
     super.dispose();
   }
 
+  /// Ouvre le menu si ce n'est pas déjà le bon.
+  void _openFor(String category) {
+    if (_activeCategory == category && _isMenuOpen) return;
+    _showMenu(category);
+  }
+
   void _toggleFor(String category) {
     if (_activeCategory == category && _isMenuOpen) {
       _hideMenu();
@@ -49,18 +55,21 @@ class _AppBarLargeState extends State<AppBarLarge> {
         MediaQuery.of(context).padding.top + widget.preferredHeight;
     final availableHeight = screenH - topOffset;
 
-    // Barrière cliquable
+    // ⬇️ Barrier limité à la zone sous la nav (top: topOffset)
     _barrierEntry = OverlayEntry(
-      builder: (_) => Positioned.fill(
+      builder: (_) => Positioned(
+        top: topOffset,
+        left: 0,
+        right: 0,
+        bottom: 0,
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: _hideMenu,
-          child: const SizedBox.shrink(),
+          child: const SizedBox.expand(),
         ),
       ),
     );
 
-    // Menu layer plein écran largeur, hauteur auto max = disponible
     _menuEntry = OverlayEntry(
       builder: (_) => Positioned(
         top: topOffset,
@@ -70,7 +79,7 @@ class _AppBarLargeState extends State<AppBarLarge> {
           type: MaterialType.transparency,
           child: MegaMenuLayer(
             category: category,
-            maxHeight: availableHeight, // ✅ contrôle la hauteur
+            maxHeight: availableHeight,
             onClose: _hideMenu,
           ),
         ),
@@ -84,6 +93,7 @@ class _AppBarLargeState extends State<AppBarLarge> {
 
     setState(() {});
   }
+
 
   void _hideMenu() {
     _menuEntry?..remove();
@@ -113,7 +123,6 @@ class _AppBarLargeState extends State<AppBarLarge> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // --- Ligne logo + recherche + icons
               Row(
                 children: [
                   Padding(
@@ -131,7 +140,6 @@ class _AppBarLargeState extends State<AppBarLarge> {
 
               const SizedBox(height: 8),
 
-              // --- Barre catégories
               SizedBox(
                 height: 23,
                 child: ListView.separated(
@@ -142,7 +150,8 @@ class _AppBarLargeState extends State<AppBarLarge> {
                     return _NavLink(
                       label: item,
                       active: active,
-                      onTap: () => _toggleFor(item),
+                      onTap: () => _toggleFor(item),   // tap = toggle
+                      onHover: () => _openFor(item),   // hover = open
                     );
                   },
                   separatorBuilder: (_, __) => const Padding(
@@ -159,8 +168,6 @@ class _AppBarLargeState extends State<AppBarLarge> {
     );
   }
 }
-
-/* --- petites briques d’UI --- */
 
 class _TopIcon extends StatelessWidget {
   final IconData icon;
@@ -184,47 +191,74 @@ class _TopIcon extends StatelessWidget {
   }
 }
 
-class _NavLink extends StatelessWidget {
+/// Lien de navigation avec gestion fiable du hover (web/desktop)
+class _NavLink extends StatefulWidget {
   final String label;
   final bool active;
   final VoidCallback onTap;
+  final VoidCallback? onHover;
 
   const _NavLink({
     required this.label,
     required this.active,
     required this.onTap,
+    this.onHover,
+    super.key,
   });
+
+  @override
+  State<_NavLink> createState() => _NavLinkState();
+}
+
+class _NavLinkState extends State<_NavLink> {
+  bool _hovering = false;
 
   @override
   Widget build(BuildContext context) {
     const c = kBloopaPrimary;
 
-    return InkWell(
-      borderRadius: BorderRadius.circular(6),
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              label,
-              style: TextStyle(
-                color: active ? c : Colors.black54,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            if (active)
-              Container(
-                margin: const EdgeInsets.only(top: 1),
-                height: 2,
-                width: 40,
-                decoration: BoxDecoration(
-                  color: c,
-                  borderRadius: BorderRadius.circular(2),
+    return MouseRegion(
+      onEnter: (_) {
+        setState(() => _hovering = true);
+        widget.onHover?.call(); // déclenche l’ouverture
+      },
+      onHover: (_) {
+        if (!_hovering) setState(() => _hovering = true);
+      },
+      onExit: (_) => setState(() => _hovering = false),
+      cursor: SystemMouseCursors.click,
+      child: Material( // garantit un ancêtre Material pour InkWell
+        type: MaterialType.transparency,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(6),
+          onTap: widget.onTap,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  widget.label,
+                  style: TextStyle(
+                    color: widget.active
+                        ? c
+                        : (_hovering ? c : Colors.black54),
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-              ),
-          ],
+                if (widget.active)
+                  Container(
+                    margin: const EdgeInsets.only(top: 1),
+                    height: 2,
+                    width: 40,
+                    decoration: BoxDecoration(
+                      color: c,
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+              ],
+            ),
+          ),
         ),
       ),
     );
