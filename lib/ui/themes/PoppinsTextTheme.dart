@@ -22,3 +22,4 @@ TextTheme PoppinsTextTheme(Brightness b) {
     labelSmall:    base.labelSmall?.copyWith(fontWeight: FontWeight.w600, color: onSurface),
   );
 }
+

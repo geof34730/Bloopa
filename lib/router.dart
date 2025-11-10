@@ -29,12 +29,12 @@ final GoRouter router = GoRouter(
           path: ':categorie/:typeproduit',
           pageBuilder: (context, state) {
             final categorie   = state.pathParameters['categorie']!;
-            final typeProduit = state.pathParameters['typeproduit']!;
+            final productType = state.pathParameters['productType']!;
 
             final seo = SeoData(
-              title: '$typeProduit - $categorie | Bloopa',
-              description: 'Découvrez nos $typeProduit dans la catégorie $categorie – prix, photos, livraison.',
-              canonicalUrl: '$urlWebApp/liste-produit/$categorie/$typeProduit',
+              title: '$productType - $categorie | Bloopa',
+              description: 'Découvrez nos $productType dans la catégorie $categorie – prix, photos, livraison.',
+              canonicalUrl: '$urlWebApp/liste-produit/$categorie/$productType',
             );
 
             return MaterialPage<void>(
@@ -43,7 +43,7 @@ final GoRouter router = GoRouter(
               arguments: seo, // ⬅️ SeoData pour cette page
               child: ProductListScreen(
                 categorie: categorie,
-                typeproduit: typeProduit,
+                typeproduit: productType,
               ),
             );
           },
